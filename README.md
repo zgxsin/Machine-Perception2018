@@ -30,5 +30,6 @@ You can use external libraries. Make sure that you add them into `setup.py` befo
 1. Branch master is the final project code branch which you can run for testing.
 2. Branch source_code is the original code branch.
 3. Branch working_project is the latest working branch where we have tested many things, such as C3D, batch normalization, weighted logit, data augmentation, bidirectional RNN, convolution feature maps drop out, moving average, etc.
-4. If you want to run the script, follow the setup above directly!
+4. Hyper-paramater configuration is included in the code. 
+5. If you want to run the script, follow the setup above directly!
 
