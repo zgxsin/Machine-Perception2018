@@ -1,5 +1,0 @@
-2018-06-02 00:44:34.321506: I tensorflow/core/platform/cpu_feature_guard.cc:140] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
-/cluster/apps/python/3.6.4_cpu/lib64/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
-  from ._conv import register_converters as _register_converters
-Evaluating /cluster/home/guzhou/MP2018_2D_compare/runs/lstm1_512_cnn5_drop3_5e4_avg_logit_1527855324/model-3800
-Done.
