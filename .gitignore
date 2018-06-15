@@ -1,0 +1,9 @@
+*.[oa]
+*~
+build/
+runs/
+/*.png
+*.egg-info/
+dist/
+/*.ipynb
+__pycache__/
