@@ -8,8 +8,6 @@ from model import CNNModel, RNNModel
 
 from Skeleton import Skeleton
 
-
-
 def main(config):
     # TODO
     # Here you can call your preprocessing functions. If you generate intermediate representations, you should be
@@ -20,7 +18,6 @@ def main(config):
     #############
     # Data
     #############
-
     # Each <key,value> pair in `training_placeholders` and `validation_placeholders` corresponds to Tensorflow placeholder.
     # Alternatively we could load data into memory and feed to the model by using feed_dict approach.
     # Create input placeholders for training data.
@@ -35,11 +32,8 @@ def main(config):
     validation_placeholders = input_pipeline(tfrecord_files=valid_tfrecord_files,
                                                config=config['inputs'],
                                                name='validation_input_pipeline',
-                                               shuffle=False)
+                                                shuffle=False)
     ###############
-
-
-
 
     # add normalized depth info to the CNN training data, replace rgb with mask_image
     training_input_layer = tf.concat([training_placeholders['mask'],  training_placeholders['skeleton'],training_placeholders['depth']],4)

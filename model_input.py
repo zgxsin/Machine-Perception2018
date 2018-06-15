@@ -76,51 +76,6 @@ def img_preprocessing_op(image_op):
         # return skeletonimage [0,255]
         return image_op_.astype(np.float32)
 
-def img_preprocessing_op_map(image_op):
-    """
-    Creates preprocessing operations that are going to be applied on a single frame.
-
-    You can do any preprocessing (masking, normalization/scaling of inputs, augmentation, etc.) by using tensorflow
-    operations. Here I provided some examples commented in the code. You can find more built-in image operations at
-    https://www.tensorflow.org/api_docs/python/tf/image .
-
-    :param image_op:
-    :return:
-    """
-    with tf.name_scope("img_preprocessing"):
-        # Convert from RGB to greyscale.
-        # image_op = tf.image.rgb_to_grayscale(image_op)
-
-        # Crop
-        #image_op = tf.image.resize_image_with_crop_or_pad(image_op, 60, 60)
-
-        # Resize operation requires 4D tensors (i.e., batch of images).
-        # Reshape the image so that it looks like a batch of one sample: [1,60,60,1]
-        #image_op = tf.expand_dims(image_op, 0)
-        # Resize
-        #image_op = tf.image.resize_bilinear(image_op, np.asarray([32,32]))
-        # Reshape the image: [32,32,1]
-        #image_op = tf.squeeze(image_op, 0)
-
-        # Normalize (zero-mean unit-variance) the image locally, i.e., by using statistics of the
-        # image not the whole data or sequence.
-        # image_op = tf.image.per_image_standardization(image_op)
-
-        # Flatten image
-        # y.set_shape(image_op.get_shape())
-        # image_op_ = tf.TensorArray(
-        #     dtype=tf.float32, size=0, dynamic_size=True)
-        # image_op = tf.image.resize_image_with_crop_or_pad(image_op, target_height=0.7*image_op.shape[0].value,
-        #                                        target_width= 0.5*image_op.shape[1].value)
-
-        image_op = tf.image.resize_image_with_crop_or_pad(image_op, target_height=80,
-                                                           target_width=80)
-
-        image_op_post = tf.image.random_flip_left_right(image_op, seed=6)
-
-
-        return image_op_post
-
 
 def read_and_decode_sequence(filename_queue, config):
     # Create a TFRecordReader.
@@ -302,16 +257,6 @@ def read_and_decode_sequence_test_data(filename_queue, config):
         mask_result.set_shape( [None, 80, 80, 3] )
         # get the human shape mask image, normalized
         image_extracted = tf.cast( mask_result, tf.float32 ) * seq_rgb / 255
-
-        # image_extracted = tf.map_fn(lambda x: tf.image.random_flip_left_right(x, seed=6),
-        #                              elems=image_extracted,
-        #                              dtype=tf.float32,
-        #                              back_prop=False
-        #                              )
-
-
-
-
         # Normalize RGB images before feeding into the model.
         # TODO
         # Here we calculate statistics locally (i.e., per sequence sample). You can iterate over the whole dataset once
@@ -321,12 +266,6 @@ def read_and_decode_sequence_test_data(filename_queue, config):
 
         skeleton_mean, skeleton_std = get_mean_and_std( seq_skeleton, axis=[0, 1, 2, 3], keepdims=True )
         seq_skeleton = (seq_skeleton - skeleton_mean) / skeleton_std
-        # no flips
-        # seq_skeleton = tf.map_fn(lambda x: tf.image.random_flip_left_right(x, seed=6),
-        #                              elems=seq_skeleton,
-        #                              dtype=tf.float32,
-        #                              back_prop=False
-        #                              )
 
         seq_depth = seq_depth / 255
 

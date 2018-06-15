@@ -183,46 +183,6 @@ class CNNModel(Model):
 
             self.model_output_raw = input_layer_
 
-    # def build_network(self):
-    #     """
-    #     Stacks convolutional layers where each layer consists of CNN+Pooling operations.
-    #     """
-    #     # regularizer_cnn = tf.contrib.layers.l1_regularizer(self.config['regularization_rate'])
-    #     with tf.variable_scope("convolution", reuse=self.reuse, initializer=self.initializer, regularizer=None, custom_getter = super().ema_getter):
-    #         input_layer_ = self.input_layer
-    #         for i, num_filter in enumerate(self.config['num_filters']):
-    #
-    #             conv_layer =  tf.layers.conv3d(
-    #                         inputs = input_layer_,
-    #                         filters = num_filter,
-    #                         kernel_size = [self.config['filter_size'][i]+7, self.config['filter_size'][i], self.config['filter_size'][i]],
-    #                         strides=(1, 1, 1),
-    #                         padding='same',
-    #                         # data_format='channels_last',
-    #                         # dilation_rate=(1, 1, 1),
-    #                         activation=tf.nn.relu,
-    #             )
-    #             # conv_layer = tf.layers.conv2d(inputs=input_layer_,
-    #             #                               filters=num_filter,
-    #             #                               kernel_size=[self.config['filter_size'][i], self.config['filter_size'][i]],
-    #             #                               padding="same",
-    #             #                               # kernel_regularizer = self.regularizer,
-    #             #                               activation=tf.nn.relu)
-    #
-    #             # tf.layers.max_pooling3d(
-    #             #     inputs,
-    #             #     pool_size,
-    #             #     strides,
-    #             #     padding='valid',
-    #             #     data_format='channels_last',
-    #             #     name=None
-    #             # )
-    #             # TODO: i don't know
-    #             pooling_layer = tf.layers.max_pooling3d(inputs=conv_layer, pool_size=[2, 2, 2], strides=[1,2,2], padding='same')
-    #             input_layer_ = pooling_layer
-    #
-    #         self.model_output_raw = input_layer_
-
     def build_graph(self, input_layer=None):
         with tf.variable_scope("cnn_model", reuse=self.reuse, initializer=self.initializer, regularizer=None, custom_getter = super().ema_getter):
             if input_layer is None:
@@ -240,10 +200,6 @@ class CNNModel(Model):
             non_temporal_input_dims = [-1, height, width, num_channels]
             self.input_layer = tf.reshape(self.input_layer, non_temporal_input_dims)
             self.build_network()
-
-            # Shape of [batch_size*seq_len, cnn_height, cnn_width, num_filters]
-            # for 3D CNN
-            # batchsize, batch_seq, cnn_height, cnn_width, num_filters = self.model_output_raw.shape.as_list()
 
             # for 2D CNN
             batchsize,  cnn_height, cnn_width, num_filters = self.model_output_raw.shape.as_list()
