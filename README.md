@@ -26,11 +26,4 @@ Submit this `csv` file to our page on [Kaggle](https://www.kaggle.com/c/mp18-dyn
 ## Remarks
 You can use external libraries. Make sure that you add them into `setup.py` before submitting your code.
 
-## Instruction
-1. 'new_master' branch is the latest branch where we have tried 3D CNN, bidirectional RNN, unbalanced weighted logit,and some data augomentation steps.
-
-2. 'master branch' is the original source code.
-
-3. 'final_branch' is the branch for project submission
-
 
